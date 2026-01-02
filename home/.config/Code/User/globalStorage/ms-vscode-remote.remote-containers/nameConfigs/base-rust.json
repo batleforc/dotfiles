@@ -1,0 +1,46 @@
+{
+  // Config from https://gist.github.com/lbssousa/bb081e35d483520928033b2797133d5e
+  "remoteUser": "${localEnv:USER}",
+  "settings": {
+    "dev.containers.copyGitConfig": false,
+    "dev.containers.gitCredentialHelperConfigLocation": "none"
+  },
+
+  "terminal.integrated.profiles.linux": {
+    "distrobox": {
+      "path": "${localEnv:SHELL}",
+      "args": ["-l"]
+    },
+    "toolbx": {
+      "path": "/usr/sbin/capsh",
+      "args": [
+        "--caps=",
+        "--",
+        "-c",
+        "exec \"$@\"",
+        "/bin/sh",
+        "${localEnv:SHELL}",
+        "-l"
+      ]
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "distrobox", // Replace with "toolbx" if you're using it
+
+  "remoteEnv": {
+    "COLORTERM": "${localEnv:COLORTERM}",
+    "DBUS_SESSION_BUS_ADDRESS": "${localEnv:DBUS_SESSION_BUS_ADDRESS}",
+    "DESKTOP_SESSION": "${localEnv:DESKTOP_SESSION}",
+    "DISPLAY": "${localEnv:DISPLAY}", // Replace with ${localEnv:HOST_DISPLAY} for Flatpak
+    "LANG": "${localEnv:LANG}",
+    "SHELL": "${localEnv:SHELL}", // Replace with ${localEnv:HOST_SHELL} for Flatpak
+    "SSH_AUTH_SOCK": "${localEnv:SSH_AUTH_SOCK}", // Replace with ${localEnv:HOST_SSH_AUTH_SOCK} for Flatpak
+    "TERM": "${localEnv:TERM}",
+    "VTE_VERSION": "${localEnv:VTE_VERSION}",
+    "XDG_CURRENT_DESKTOP": "${localEnv:XDG_CURRENT_DESKTOP}",
+    "XDG_DATA_DIRS": "${localEnv:XDG_DATA_DIRS}",
+    "XDG_MENU_PREFIX": "${localEnv:XDG_MENU_PREFIX}",
+    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
+    "XDG_SESSION_DESKTOP": "${localEnv:XDG_SESSION_DESKTOP}",
+    "XDG_SESSION_TYPE": "${localEnv:XDG_SESSION_TYPE}"
+  }
+}
