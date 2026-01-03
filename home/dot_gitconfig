@@ -1,0 +1,22 @@
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+  st = status
+  qc = !git add . && git commit && git push
+[pull]
+  rebase = true
+[core]
+  editor = nvim
+[init]
+	defaultBranch = main
+[user]
+  name = Max Batleforc
+  email = maxleriche.60@gmail.com
+  signingkey = 25D243AB4B6AC9E7 # Available on github so not a secret
+[gpg]
+  program = gpg2
+[commit]
+  gpgsign = true
+[tag]
+  gpgsign = true
