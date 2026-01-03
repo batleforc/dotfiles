@@ -38,7 +38,7 @@ failed=0
 
 for extension in $extensions; do
     echo "Installing: $extension"
-    if code --install-extension "$extension"; then
+    if code --install-extension "$extension" --force; then
         ((installed++))
     else
         echo "Failed to install: $extension"
