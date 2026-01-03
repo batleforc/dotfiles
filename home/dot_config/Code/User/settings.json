@@ -1,0 +1,10 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "'FiraCode Nerd Font', 'FiraCode NF','Droid Sans Mono', 'monospace', monospace",
+  "editor.fontLigatures": true,
+  "workbench.preferredDarkColorTheme": "Sweet Dracula",
+  "cSpell.language": "en,fr",
+  "gitlens.plusFeatures.enabled": false,
+  "editor.guides.bracketPairs": true
+}
