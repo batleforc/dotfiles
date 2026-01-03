@@ -3,8 +3,12 @@
   "editor.formatOnSave": true,
   "editor.fontFamily": "'FiraCode Nerd Font', 'FiraCode NF','Droid Sans Mono', 'monospace', monospace",
   "editor.fontLigatures": true,
-  "workbench.preferredDarkColorTheme": "Sweet Dracula",
+  "workbench.preferredDarkColorTheme": "Vitesse Dark",
   "cSpell.language": "en,fr",
   "gitlens.plusFeatures.enabled": false,
-  "editor.guides.bracketPairs": true
+  "editor.guides.bracketPairs": true,
+  "gitlens.launchpad.indicator.enabled": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

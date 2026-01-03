@@ -25,6 +25,16 @@
     "pflannery.vscode-versionlens",
     "redhat.vscode-yaml",
     "gruntfuggly.todo-tree",
-    "editorconfig.editorconfig"
+    "editorconfig.editorconfig",
+    "pkief.material-icon-theme",
+    "sdras.night-owl",
+    "antfu.theme-vitesse",
+    "github.vscode-github-actions",
+    "vue.volar",
+    "vadimcn.vscode-lldb",
+    "dbaeumer.vscode-eslint",
+    "lokalise.i18n-ally",
+    "antfu.slidev",
+    "antfu.browse-lite"
   ]
 }
