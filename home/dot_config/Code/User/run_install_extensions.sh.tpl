@@ -4,7 +4,7 @@
 # Run by chezmoi at each apply
 
 # Get the directory where the script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="{{ joinPath .chezmoi.sourceDir "home/dot_config/Code/User" }}"
 EXTENSIONS_FILE="$SCRIPT_DIR/extensions.json"
 
 # Check if extensions.json exists
