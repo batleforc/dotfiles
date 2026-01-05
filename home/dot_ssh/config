@@ -1,0 +1,3 @@
+Host *
+    PubkeyAuthentication no
+    IdentitiesOnly yes
