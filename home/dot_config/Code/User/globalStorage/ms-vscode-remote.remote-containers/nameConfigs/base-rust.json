@@ -24,7 +24,7 @@
       ]
     }
   },
-  "terminal.integrated.defaultProfile.linux": "distrobox", // Replace with "toolbx" if you're using it
+  "terminal.integrated.defaultProfile.linux": "toolbx", // Replace with "toolbx" if you're using it
 
   "remoteEnv": {
     "COLORTERM": "${localEnv:COLORTERM}",
