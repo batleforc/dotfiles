@@ -25,3 +25,4 @@ fi
 unset rc
 
 source ~/.local/share/chezmoi/default/main.sh
+eval "$(~/.local/bin/mise activate bash)"
