@@ -3,8 +3,6 @@
   "logo": {
     "source": "~/.config/fastfetch/images/logo.png",
     "type": "kitty",
-    "height": 30,
-    "width": 38,
     "padding": {
       "left": 3,
     },
