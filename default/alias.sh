@@ -12,7 +12,7 @@ if command -v fzf &> /dev/null; then
     alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 fi
 
-if [ $TERM -ne "xterm-ghostty" ]; then
+if [ "$TERM" != "xterm-ghostty" ]; then
     alias fastfetch='fastfetch --logo-type builtin'
 fi
 
