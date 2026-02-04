@@ -12,5 +12,9 @@ if command -v fzf &> /dev/null; then
     alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 fi
 
+if [ $TERM -ne "xterm-ghostty" ]; then
+    alias fastfetch='fastfetch --logo-type builtin'
+fi
+
 # Neovim alias, taken from Omarchy's default dotfiles
 n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
