@@ -17,7 +17,6 @@
       "type": "host",
       "key": " PC",
       "keyColor": "red",
-      "format": "MacBook Pro (14-inch, 2024)",
     },
     {
       "type": "cpu",
