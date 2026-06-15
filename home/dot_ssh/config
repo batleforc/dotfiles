@@ -1,3 +1,13 @@
 Host *
     PubkeyAuthentication no
     IdentitiesOnly yes
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github
+Host git.weebo.fr
+    HostName git.weebo.fr
+    IdentityFile ~/.ssh/weebo
+Host git.batleforc.fr
+    HostName git.batleforc.fr
+    IdentityFile ~/.ssh/github

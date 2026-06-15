@@ -8,8 +8,67 @@
   "gitlens.plusFeatures.enabled": false,
   "editor.guides.bracketPairs": true,
   "gitlens.launchpad.indicator.enabled": false,
+  "disable-hardware-acceleration": true,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "workbench.colorTheme": "Vitesse Dark"
+  "workbench.colorTheme": "Vitesse Dark",
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": true,
+    "scminput": false
+  },
+  "http.systemCertificatesNode": true,
+  "terminal.integrated.fontLigatures.enabled": true,
+  "notebook.lineNumbers": "on",
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "editor.codeActionsOnSave": {},
+  "editor.linkedEditing": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[dockercompose]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.associations": {
+    "*.vue": "vue"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "chat.viewSessions.orientation": "stacked",
+  "terminal.integrated.fontFamily": "'FiraCode Nerd Font', 'FiraCode NF', 'Droid Sans Mono', 'Noto Color Emoji', monospace",
+  "[helm]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "diffEditor.ignoreTrimWhitespace": false,
+  "opentofu.languageServer.tofu.path": "/home/max/.local/share/mise/installs/opentofu/latest/tofu",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "claudeCode.preferredLocation": "panel",
+  "[toml]": {
+    "editor.defaultFormatter": "tombi-toml.tombi"
+  },
+  "continue.enableNextEdit": true,
+  "sonarlint.connectedMode.connections.sonarcloud": [
+    {
+      "organizationKey": "batleforc",
+      "connectionId": "batleforc",
+      "region": "EU"
+    }
+  ]
 }
