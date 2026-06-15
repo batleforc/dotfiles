@@ -52,7 +52,7 @@ fi
 unset rc
 
 source ~/.local/share/chezmoi/default/main.sh
-eval "$(~/.local/bin/mise activate bash)
+eval "$(~/.local/bin/mise activate bash)"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/var/home/max/.lmstudio/bin"
