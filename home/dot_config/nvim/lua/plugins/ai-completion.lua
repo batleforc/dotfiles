@@ -21,7 +21,7 @@ return {
           api_key = "TERM", -- dummy; LM Studio needs no key, but an env var name is required
           name = "LMStudio",
           end_point = "http://localhost:1234/v1/completions",
-          model = "qwen2.5-coder-7b-instruct", -- EDIT to match `curl http://localhost:1234/v1/models`
+          model = "mellum2-12b-a2.5b-instruct" -- "qwen2.5-coder-7b-instruct", -- EDIT to match `curl http://localhost:1234/v1/models`
           stream = true,
           optional = {
             max_tokens = 128,
