@@ -45,7 +45,8 @@ return {
       {
         "<A-y>",
         function()
-          require("minuet.virtualtext").action.invoke()
+          -- minuet has no dedicated invoke(); `next` requests a completion when none is shown
+          require("minuet.virtualtext").action.next()
         end,
         mode = "i",
         desc = "Minuet: request AI completion",
