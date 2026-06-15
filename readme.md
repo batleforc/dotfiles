@@ -6,7 +6,7 @@ This repository contains my personal dotfiles and configuration files for variou
 
 - **Shell Configurations**: Custom configurations for Bash, Starship, and other tools.
 - **Editor Configurations**:
-  - Settings for Neovim, including plugins and themes like the LazyVim setup.
+  - Neovim settings is moved to it's [dedicated repo](https://github.com/batleforc/weebo-dotfiles-nvim) - will be used in Eclipse Che
   - Configurations for VSCode.
 
 ## TODO
