@@ -1,0 +1,12 @@
+binds {
+    Mod+space hotkey-overlay-title="Default Launcher: Toggle" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Super+Alt+L hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
+    Super+7 { focus-workspace 1; }
+    Super+9 { focus-workspace 5; }
+    Super+Apostrophe { focus-workspace 3; }
+    Super+Eacute { focus-workspace 2; }
+    Super+Egrave { focus-workspace 7; }
+    Super+Minus { focus-workspace 6; }
+    Mod+T hotkey-overlay-title="Open a Terminal: Ghostty" { spawn "ghostty"; }
+    Super+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+}
