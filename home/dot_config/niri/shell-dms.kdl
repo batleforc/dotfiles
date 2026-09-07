@@ -1,0 +1,9 @@
+// DankMaterialShell.
+//
+// dms.service starts the shell (enabled image-wide by recipes/niri/dms-modules.yml),
+// and DMS itself regenerates the files below at runtime. Do not edit them here.
+
+include "dms/cursor.kdl"
+include "dms/binds.kdl"
+
+include "dms/outputs.kdl"

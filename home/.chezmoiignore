@@ -1,0 +1,4 @@
+{{ if lookPath "noctalia" -}}
+{{/* DMS regenerates these at runtime; they are dead weight on a Noctalia host. */}}
+.config/niri/dms
+{{ end -}}

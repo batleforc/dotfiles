@@ -1,0 +1,46 @@
+// Noctalia.
+//
+// Unlike DMS, Noctalia writes nothing into the niri config directory and ships
+// no systemd unit, so everything it needs is authored here and the compositor
+// starts it. See https://docs.noctalia.dev/noctalia/compositor-settings/niri/
+spawn-at-startup "noctalia"
+
+binds {
+    Mod+Space hotkey-overlay-title="Launcher: Noctalia" { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+S hotkey-overlay-title="Control Center: Noctalia" { spawn-sh "noctalia msg panel-toggle control-center"; }
+    Mod+Comma hotkey-overlay-title="Noctalia Settings" { spawn-sh "noctalia msg settings-toggle"; }
+    Super+Alt+L hotkey-overlay-title="Lock Screen" { spawn-sh "noctalia msg session lock"; }
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute allow-when-locked=true { spawn-sh "noctalia msg volume-mute"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
+
+    // AZERTY workspace binds, carried over from dms/binds.kdl.
+    Super+7 { focus-workspace 1; }
+    Super+Eacute { focus-workspace 2; }
+    Super+Apostrophe { focus-workspace 3; }
+    Super+9 { focus-workspace 5; }
+    Super+Minus { focus-workspace 6; }
+    Super+Egrave { focus-workspace 7; }
+}
+
+// Floating settings window.
+window-rule {
+    match app-id="dev.noctalia.Noctalia"
+    open-floating true
+    default-column-width { fixed 1080; }
+    default-window-height { fixed 920; }
+}
+
+// Noctalia's blurred backdrop layer shows through niri's overview.
+layer-rule {
+    match namespace="^noctalia-backdrop"
+    place-within-backdrop true
+}
+
+debug {
+    // Lets Noctalia's notification actions activate windows.
+    honor-xdg-activation-with-invalid-serial
+}
