@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+# chezmoi modify_ script for VS Code's settings.json.
+#
+# VS Code rewrites this file itself and many keys only make sense on one
+# machine (kubeconfig paths, yaml.schemas, per-URL auto-approvals). So the repo
+# does not own the file: it pins the portable keys from settings.portable.jsonc
+# and keeps everything else exactly as VS Code left it.
+import json
+import re
+import sys
+
+PORTABLE = {{ joinPath .chezmoi.sourceDir "dot_config/Code/User/settings.portable.jsonc" | quote }}
+
+
+def jsonc_to_json(text):
+    """Drop // and /* */ comments and trailing commas, leaving strings intact."""
+    out, i, n = [], 0, len(text)
+    while i < n:
+        c = text[i]
+        if c == '"':
+            j = i + 1
+            while j < n and text[j] != '"':
+                j += 2 if text[j] == "\\" else 1
+            out.append(text[i:j + 1])
+            i = j + 1
+        elif text.startswith("//", i):
+            i = text.find("\n", i)
+            i = n if i == -1 else i
+        elif text.startswith("/*", i):
+            i = text.find("*/", i + 2)
+            i = n if i == -1 else i + 2
+        else:
+            out.append(c)
+            i += 1
+    return re.sub(r",(\s*[}\]])", r"\1", "".join(out))
+
+
+raw = sys.stdin.read()
+try:
+    current = json.loads(jsonc_to_json(raw)) if raw.strip() else {}
+    with open(PORTABLE, encoding="utf-8") as f:
+        pinned = json.loads(jsonc_to_json(f.read()))
+except (OSError, ValueError):
+    # Never destroy a file we cannot read: hand it back untouched.
+    sys.stdout.write(raw)
+    sys.exit(0)
+
+if all(current.get(k) == v for k, v in pinned.items()):
+    # Already in line: keep VS Code's own formatting (trailing commas and all),
+    # or every save from VS Code would show up as a chezmoi diff.
+    sys.stdout.write(raw)
+    sys.exit(0)
+
+current.update(pinned)
+json.dump(current, sys.stdout, indent=2, ensure_ascii=False)
+sys.stdout.write("\n")

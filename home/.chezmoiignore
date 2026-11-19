@@ -6,3 +6,6 @@
 {{/* DMS moved its config to ~/.config/dms and left this as a compatibility
      symlink. Managing it would replace the link with a real directory. */}}
 .config/DankMaterialShell
+
+{{/* Data for modify_settings.json, not a file to deploy. */}}
+.config/Code/User/settings.portable.jsonc
