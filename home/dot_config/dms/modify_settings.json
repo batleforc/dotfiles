@@ -17,6 +17,10 @@ PINNED = {
     "displayNameMode": "model",
     # QD-OLED: never leave a static image lit forever (0 = never). Seconds.
     "acMonitorTimeout": 600,
+    # Lock when away (0 = never). Shorter on battery: the laptop is out and about.
+    "acLockTimeout": 900,
+    "batteryMonitorTimeout": 300,
+    "batteryLockTimeout": 600,
 }
 
 raw = sys.stdin.read()
