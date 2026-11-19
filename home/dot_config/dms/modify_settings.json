@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+# chezmoi modify_ script: DMS rewrites settings.json from its own UI, so the
+# repo does not own the whole file. It only pins the keys below and keeps
+# everything else exactly as DMS left it.
+import json
+import sys
+
+PINNED = {
+    # BatleHub theme (themes/batlehub/theme.json).
+    "currentThemeName": "custom",
+    "currentThemeCategory": "registry",
+    "customThemeFile": "~/.config/dms/themes/batlehub/theme.json",
+    # Short animations instead of none.
+    "animationDuration": 250,
+    # Match screens by make/model/serial, not by connector: the dock hands the
+    # same monitor DP-10 one day and DP-11 the next.
+    "displayNameMode": "model",
+    # QD-OLED: never leave a static image lit forever (0 = never). Seconds.
+    "acMonitorTimeout": 600,
+}
+
+raw = sys.stdin.read()
+try:
+    settings = json.loads(raw) if raw.strip() else {}
+except json.JSONDecodeError:
+    # Never destroy a file we cannot parse: hand it back untouched.
+    sys.stdout.write(raw)
+    sys.exit(0)
+
+settings.update(PINNED)
+json.dump(settings, sys.stdout, indent=2, ensure_ascii=False)
+sys.stdout.write("\n")

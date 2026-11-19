@@ -1,0 +1,47 @@
+// BatleHub colours for niri (same tokens as the BatleHub VS Code and DMS themes).
+//
+//   ink #f4e4e2   dim ink #a07c76   rule #463230   strong rule #885b57
+//   Signal Crimson #ff343d  action      Aged Copper #e8894a  pending
+//   Signal Amber   #fdc436  focus only  error       #f05129
+//   ground #030001 (true black on OLED: those pixels are simply off)
+
+layout {
+    background-color "#030001"
+
+    focus-ring {
+        active-color "#fdc436"
+        inactive-color "#463230"
+        urgent-color "#f05129"
+    }
+
+    border {
+        active-color "#ff343d"
+        inactive-color "#463230"
+        urgent-color "#f05129"
+    }
+
+    tab-indicator {
+        active-color "#fdc436"
+        inactive-color "#463230"
+        urgent-color "#f05129"
+    }
+
+    insert-hint {
+        color "#ff343d80"
+    }
+
+    shadow {
+        color "#00000070"
+    }
+}
+
+overview {
+    backdrop-color "#030001"
+}
+
+recent-windows {
+    highlight {
+        active-color "#2b0b0e"
+        urgent-color "#f05129"
+    }
+}

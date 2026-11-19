@@ -1,9 +1,23 @@
 // DankMaterialShell.
 //
 // dms.service starts the shell (enabled image-wide by recipes/niri/dms-modules.yml),
-// and DMS itself regenerates the files below at runtime. Do not edit them here.
+// and DMS itself regenerates the dms/*.kdl files at runtime from its settings UI.
+// Do not edit them; change the setting in DMS instead.
+//
+// All optional: DMS only writes a fragment once its setting is touched, and a
+// missing include must not stop niri from starting.
 
-include "dms/cursor.kdl"
-include "dms/binds.kdl"
+include optional=true "dms/input.kdl"
+include optional=true "dms/cursor.kdl"
+include optional=true "dms/layout.kdl"
+include optional=true "dms/alttab.kdl"
+include optional=true "dms/wpblur.kdl"
+include optional=true "dms/windowrules.kdl"
+include optional=true "dms/outputs.kdl"
+include optional=true "dms/binds.kdl"
+include optional=true "dms/binds-next.kdl"
 
-include "dms/outputs.kdl"
+// dms/colors.kdl is deliberately NOT included: it paints the focus ring with
+// the theme's primary (crimson), while BatleHub keeps amber for focus only.
+// batlehub.kdl owns the compositor colours instead.
+include "batlehub.kdl"

@@ -2,3 +2,7 @@
 {{/* DMS regenerates these at runtime; they are dead weight on a Noctalia host. */}}
 .config/niri/dms
 {{ end -}}
+
+{{/* DMS moved its config to ~/.config/dms and left this as a compatibility
+     symlink. Managing it would replace the link with a real directory. */}}
+.config/DankMaterialShell

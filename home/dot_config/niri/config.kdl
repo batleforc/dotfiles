@@ -324,6 +324,15 @@ window-rule {
     open-floating true
 }
 
+// Adaptive sync only for games. Outputs set `variable-refresh-rate on-demand=true`
+// (DMS display settings), so VRR engages only while one of these is on screen:
+// QD-OLED panels flicker on dark scenes with VRR always on, so the desktop stays fixed.
+window-rule {
+    match app-id=r#"^steam_app_"#
+    match app-id=r#"^gamescope$"#
+    variable-refresh-rate true
+}
+
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {
