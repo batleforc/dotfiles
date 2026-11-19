@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+# Drive one external monitor over DDC/CI from niri key binds.
+#
+#   monitor-ddc brightness +5|-5   brightness step, through DMS (shows its OSD)
+#   monitor-ddc srgb               toggle the colour preset: sRGB <-> what it was
+#   monitor-ddc input-next         cycle the inputs listed in INPUTS (KVM)
+#   monitor-ddc input <code>       switch to one input (VCP 0x60 code, e.g. 0x0f)
+#   monitor-ddc detect             show which bus the target monitor is on
+#
+# The target is found by manufacturer/model through `ddcutil detect`, never by
+# connector or bus number: behind the dock those change between plugs.
+#
+# Settings live in ~/.config/monitor-ddc.conf (sourced as shell):
+#   DDC_MFG="MSI"                       # EDID manufacturer id
+#   DDC_MODEL=""                        # optional, narrows to one model
+#   SRGB_CODE=0x01                      # VCP 0x14 value for sRGB (MCCS standard)
+#   INPUTS=(0x0f 0x1b)                  # VCP 0x60 codes, from `ddcutil capabilities`
+set -uo pipefail
+
+DDC_MFG="MSI"
+DDC_MODEL=""
+SRGB_CODE=0x01
+INPUTS=()
+# shellcheck source=/dev/null
+[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/monitor-ddc.conf" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/monitor-ddc.conf"
+
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/monitor-ddc"
+BUS_CACHE="${XDG_RUNTIME_DIR:-/tmp}/monitor-ddc.bus"
+mkdir -p "$STATE_DIR"
+
+notify() { notify-send -a "Écran" -i video-display "$1" "${2:-}" 2>/dev/null || echo "$1 ${2:-}" >&2; }
+die() { notify "$1" "${2:-}"; exit 1; }
+
+case "${1:-}" in
+brightness | srgb | input | input-next | detect) ;;
+*) sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; exit 2 ;;
+esac
+
+command -v ddcutil >/dev/null || die "ddcutil n'est pas installé" "Il arrive avec l'image weebo-os (recette DMS)."
+
+# Print the i2c bus number of the first display matching DDC_MFG / DDC_MODEL.
+find_bus() {
+    ddcutil detect --terse 2>/dev/null | awk -v mfg="$DDC_MFG" -v model="$DDC_MODEL" '
+        /I2C bus:/ { split($NF, p, "-"); bus = p[2] }
+        /Monitor:/ {
+            line = $0
+            sub(/^.*Monitor:[ \t]*/, "", line)   # model names contain spaces
+            split(line, m, ":")
+            if (m[1] == mfg && (model == "" || index(m[2], model))) { print bus; exit }
+        }'
+}
+
+# Cached bus, re-detected when missing or when the cached one stops answering.
+bus() {
+    local b
+    b=$(cat "$BUS_CACHE" 2>/dev/null)
+    if [ -z "$b" ] || ! ddcutil --bus "$b" getvcp 10 --terse >/dev/null 2>&1; then
+        b=$(find_bus)
+        [ -n "$b" ] || die "Écran $DDC_MFG ${DDC_MODEL} introuvable en DDC/CI" "Branché ? DDC/CI activé dans le menu de l'écran ?"
+        echo "$b" >"$BUS_CACHE"
+    fi
+    echo "$b"
+}
+
+# Current value of a non-continuous VCP feature, as lowercase 0xNN.
+getnc() { ddcutil --bus "$1" getvcp "$2" --terse 2>/dev/null | awk '{ print tolower($4) }' | sed 's/^x/0x/'; }
+
+case "${1:-}" in
+brightness)
+    step="${2:?usage: monitor-ddc brightness +5|-5}"
+    b=$(bus) || exit 1
+    if [ "${step#-}" != "$step" ]; then fn=decrement; else fn=increment; fi
+    dms ipc call brightness "$fn" "${step#[+-]}" "ddc:i2c-$b" >/dev/null 2>&1 ||
+        ddcutil --bus "$b" setvcp 10 "${step:0:1}" "${step#[+-]}" ;;
+srgb)
+    b=$(bus) || exit 1
+    cur=$(getnc "$b" 14)
+    [ -n "$cur" ] || die "Préréglage couleur (VCP 0x14) illisible" "Voir « ddcutil capabilities »."
+    if [ "$((cur))" -eq "$((SRGB_CODE))" ]; then
+        back=$(cat "$STATE_DIR/preset" 2>/dev/null || echo 0x02)
+        ddcutil --bus "$b" setvcp 14 "$back" && notify "Mode natif" "Gamut complet de la dalle (préréglage $back)"
+    else
+        echo "$cur" >"$STATE_DIR/preset"
+        ddcutil --bus "$b" setvcp 14 "$SRGB_CODE" && notify "Mode sRGB" "Couleurs limitées au sRGB : niri ne gère pas les couleurs"
+    fi ;;
+input)
+    b=$(bus) || exit 1
+    ddcutil --bus "$b" setvcp 60 "${2:?usage: monitor-ddc input <code>}" ;;
+input-next)
+    [ "${#INPUTS[@]}" -gt 0 ] || die "Aucune entrée configurée" "Mettre INPUTS=(…) dans ~/.config/monitor-ddc.conf"
+    b=$(bus) || exit 1
+    cur=$(getnc "$b" 60)
+    next="${INPUTS[0]}"
+    for i in "${!INPUTS[@]}"; do
+        if [ -n "$cur" ] && [ "$((INPUTS[i]))" -eq "$((cur))" ]; then
+            next="${INPUTS[(i + 1) % ${#INPUTS[@]}]}"
+            break
+        fi
+    done
+    ddcutil --bus "$b" setvcp 60 "$next" ;;
+detect)
+    rm -f "$BUS_CACHE"
+    echo "Écran $DDC_MFG ${DDC_MODEL}: i2c-$(bus)" ;;
+esac

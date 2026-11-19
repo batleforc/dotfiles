@@ -399,6 +399,13 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
+    // External monitor (MSI MAG 341CQP QD-OLED) over DDC/CI, see ~/.local/bin/monitor-ddc.
+    // Not Mod+Alt+S: Super+Alt+S is the screen reader.
+    Mod+Alt+Up   hotkey-overlay-title="Écran externe : luminosité +" { spawn-sh "~/.local/bin/monitor-ddc brightness +5"; }
+    Mod+Alt+Down hotkey-overlay-title="Écran externe : luminosité -" { spawn-sh "~/.local/bin/monitor-ddc brightness -5"; }
+    Mod+Alt+C    hotkey-overlay-title="Écran externe : sRGB / natif" { spawn-sh "~/.local/bin/monitor-ddc srgb"; }
+    Mod+Alt+I    hotkey-overlay-title="Écran externe : entrée suivante (KVM)" { spawn-sh "~/.local/bin/monitor-ddc input-next"; }
+
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
