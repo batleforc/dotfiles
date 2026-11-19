@@ -1,0 +1,28 @@
+# BatleHub for Ghostty (same tokens as the BatleHub VS Code, DMS and niri themes).
+#
+# The four BatleHub voices keep their meaning: crimson = action, copper = pending,
+# amber = focus (the cursor), error red = broken. Green, blue and cyan are not
+# BatleHub voices; they are muted on purpose so they never outshout those four.
+background = #030001
+foreground = #f4e4e2
+cursor-color = #fdc436
+cursor-text = #030001
+selection-background = #2b0b0e
+selection-foreground = #f4e4e2
+
+palette = 0=#140809
+palette = 1=#f05129
+palette = 2=#9cc27a
+palette = 3=#e8894a
+palette = 4=#7fa6d8
+palette = 5=#ff343d
+palette = 6=#6fc3c0
+palette = 7=#cdbab7
+palette = 8=#a07c76
+palette = 9=#ff6a4d
+palette = 10=#b8dc96
+palette = 11=#fdc436
+palette = 12=#a6c3ec
+palette = 13=#ff6b72
+palette = 14=#9bdbd8
+palette = 15=#f4e4e2

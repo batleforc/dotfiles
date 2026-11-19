@@ -1,4 +1,5 @@
 add_newline = true
+palette = "batlehub"
 command_timeout = 200
 #format = "[$directory$git_branch$git_status]($style)$character"
 #format = "[$directory$git_branch$git_status]($style)$character"
@@ -81,22 +82,23 @@ $shell\
 $character"""
 
 [character]
-error_symbol = "[✗](bold cyan)"
-success_symbol = "[❯](bold cyan)"
+error_symbol = "[✗](bold error)"
+success_symbol = "[❯](bold crimson)"
 
 [directory]
 truncation_length = 2
 truncation_symbol = "…/"
-repo_root_style = "bold cyan"
+style = "ink"
+repo_root_style = "bold ink"
 repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
 format = "[$branch]($style) "
-style = "italic cyan"
+style = "italic dim"
 
 [git_status]
 format = '[$all_status]($style)'
-style = "cyan"
+style = "copper"
 ahead = "⇡${count} "
 diverged = "⇕⇡${ahead_count}⇣${behind_count} "
 behind = "⇣${count} "
@@ -114,3 +116,19 @@ format = "[$symbol($version )]($style)"
 
 [nodejs]
 format = "[$symbol($version )]($style)"
+
+[cmd_duration]
+style = "copper"
+
+[status]
+style = "error"
+
+# BatleHub tokens (same as the VS Code, DMS, niri and Ghostty themes).
+# crimson = action, copper = pending, amber = focus only, error = broken.
+[palettes.batlehub]
+ink = "#f4e4e2"
+dim = "#a07c76"
+crimson = "#ff343d"
+copper = "#e8894a"
+amber = "#fdc436"
+error = "#f05129"

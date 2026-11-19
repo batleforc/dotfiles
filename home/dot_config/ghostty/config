@@ -1,1 +1,4 @@
 font-family = "FiraCode Nerd Font"
+
+# themes/batlehub: true-black ground, which leaves QD-OLED pixels off.
+theme = batlehub
