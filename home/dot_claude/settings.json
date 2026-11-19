@@ -1,6 +1,45 @@
 {
+  "env": {
+    "WEEBO_HUD_DISQUE_HOME": "0",
+    "WEEBO_HUD_CPU": "0",
+    "WEEBO_HUD_RESET7J": "0"
+  },
+  "model": "opus",
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline.sh"
+    "command": "wska hud statusline",
+    "refreshInterval": 5
+  },
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "impeccable@impeccable": true,
+    "weebo-hud@weebo": true
+  },
+  "extraKnownMarketplaces": {
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      }
+    },
+    "weebo": {
+      "source": {
+        "source": "github",
+        "repo": "batleforc/weebo-skillsagent"
+      }
+    }
+  },
+  "voice": {
+    "enabled": false,
+    "mode": "hold"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "switchModelsOnFlag": true,
+  "voiceEnabled": false,
+  "skillOverrides": {
+    "frontend-design": "off",
+    "theme-factory": "off"
   }
 }
