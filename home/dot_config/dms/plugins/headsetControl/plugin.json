@@ -1,0 +1,13 @@
+{
+    "id": "headsetControl",
+    "name": "Headset",
+    "description": "Battery, sidetone, auto-off and equalizer preset of a USB headset, through HeadsetControl.",
+    "version": "1.0.0",
+    "author": "batleforc",
+    "type": "widget",
+    "capabilities": ["dankbar-widget"],
+    "component": "./HeadsetWidget.qml",
+    "icon": "headphones",
+    "requires": ["headsetcontrol"],
+    "permissions": ["settings_read", "settings_write"]
+}
