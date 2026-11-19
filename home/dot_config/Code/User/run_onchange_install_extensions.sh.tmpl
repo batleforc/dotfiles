@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Install VS Code extensions listed in extensions.json.
+# run_onchange_: chezmoi only re-runs this when the hash below changes,
+# i.e. when extensions.json is edited.
+# extensions.json hash: {{ include "dot_config/Code/User/extensions.json" | sha256sum }}
+
+EXTENSIONS_FILE="{{ joinPath .chezmoi.sourceDir "dot_config/Code/User/extensions.json" }}"
+
+if ! command -v code &> /dev/null; then
+    echo "VS Code ('code') not found, skipping extensions install."
+    exit 0
+fi
+
+if command -v jq &> /dev/null; then
+    extensions=$(jq -r '.recommendations[]' "$EXTENSIONS_FILE")
+else
+    extensions=$(grep -oP '"\K[^"]+(?=")' "$EXTENSIONS_FILE" | grep '\.')
+fi
+
+# Extension IDs are case-insensitive: compare in lowercase.
+installed_list=$(code --list-extensions | tr '[:upper:]' '[:lower:]')
+
+installed=0
+failed=0
+for extension in $extensions; do
+    if grep -qxF "${extension,,}" <<< "$installed_list"; then
+        continue
+    fi
+    echo "Installing: $extension"
+    if code --install-extension "$extension"; then
+        ((installed++))
+    else
+        echo "Failed to install: $extension"
+        ((failed++))
+    fi
+done
+
+echo "VS Code extensions: $installed installed, $failed failed (others already present)."
