@@ -1,0 +1,22 @@
+name: Check dotfiles
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    # Same distro as weebo-os, so niri and chezmoi are the versions the desktop runs.
+    container: fedora:44
+    steps:
+      - name: Install tools
+        run: dnf install -y --setopt=install_weak_deps=False git chezmoi niri ShellCheck jq python3 libxml2
+
+      - uses: actions/checkout@v4
+
+      - name: Render and validate
+        env:
+          STRICT: "1"
+        run: scripts/check.sh
