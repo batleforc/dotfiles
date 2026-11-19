@@ -22,3 +22,9 @@ codex = "latest"
 
 [plugins]
 kkrew = "https://github.com/soupglasses/mise-krew"
+
+[settings]
+# The chezmoi source tree holds dot_config/mise/config.toml as data to deploy,
+# not as a project config: without this, entering it makes mise refuse to run
+# ("config files ... are not trusted") and every shim fails there.
+ignored_config_paths = [{{ .chezmoi.sourceDir | quote }}]
