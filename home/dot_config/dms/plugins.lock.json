@@ -1,0 +1,17 @@
+{
+  "lockfileVersion": 1,
+  "plugins": {
+    "emojiLauncher": {
+      "repo": "https://github.com/devnullvoid/dms-emoji-launcher",
+      "commit": "35ea4d653417840b9045c77a9adb0188a4900086"
+    },
+    "kubernetes": {
+      "repo": "https://github.com/psyreactor/dms-kubernetes",
+      "commit": "0c39d9a28bb2ea592f7a306021dffaabbf2723ca"
+    },
+    "linuxWallpaperEngine": {
+      "repo": "https://github.com/sgtaziz/dms-wallpaperengine",
+      "commit": "52adee36fdc98a9b323f41ddd5ffff9e11c27c43"
+    }
+  }
+}

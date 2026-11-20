@@ -127,7 +127,7 @@ fi
 
 echo "== modify_ scripts keep what they do not own"
 # Feed each one a file holding a foreign key; it must survive the merge.
-for spec in "dms/modify_settings.json" "Code/User/modify_settings.json.tmpl"; do
+for spec in "dms/modify_settings.json" "dms/modify_plugin_settings.json" "Code/User/modify_settings.json.tmpl"; do
     src="$repo/home/dot_config/$spec"
     script="$work/$(echo "$spec" | tr / _).py"
     chezmoi execute-template --source "$repo" --config "$work/chezmoi.toml" <"$src" >"$script"

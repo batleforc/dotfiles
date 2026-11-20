@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Install the DMS registry plugins pinned in ~/.config/dms/plugins.lock.json.
+# run_onchange_: re-runs only when the lockfile changes (hash below).
+# After installing or updating a plugin from DMS: `dms plugins lock`, then
+# `chezmoi re-add ~/.config/dms/plugins.lock.json` to record it here.
+# plugins.lock.json hash: {{ include "dot_config/dms/plugins.lock.json" | sha256sum }}
+set -euo pipefail
+
+if ! command -v dms >/dev/null; then
+    echo "dms not installed (Noctalia host?), skipping DMS plugins."
+    exit 0
+fi
+dms plugins restore "$HOME/.config/dms/plugins.lock.json"

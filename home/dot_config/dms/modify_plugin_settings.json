@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+# chezmoi modify_ script for DMS plugin_settings.json.
+# Pins which plugins are enabled; every other key a plugin keeps there (recent
+# emojis, sidetone level...) stays as DMS left it.
+import json
+import sys
+
+ENABLED = {
+    "emojiLauncher": True,
+    "headsetControl": True,
+    "kubernetes": False,
+    "linuxWallpaperEngine": False,
+}
+
+raw = sys.stdin.read()
+try:
+    settings = json.loads(raw) if raw.strip() else {}
+except json.JSONDecodeError:
+    sys.stdout.write(raw)
+    sys.exit(0)
+
+if all(settings.get(p, {}).get("enabled") == on for p, on in ENABLED.items()):
+    sys.stdout.write(raw)  # already in line: leave DMS's formatting alone
+    sys.exit(0)
+
+for plugin, on in ENABLED.items():
+    settings.setdefault(plugin, {})["enabled"] = on
+json.dump(settings, sys.stdout, indent=2, ensure_ascii=False)
+sys.stdout.write("\n")
