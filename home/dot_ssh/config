@@ -1,14 +1,5 @@
 Include ~/.config/Code/User/globalStorage/batlehub.che-remote-ssh/ssh/che-remote-ssh.conf
 
-Host weebo-dev-setup
-    HostName 127.0.0.1
-    Port 2022
-    User user
-    IdentityFile ~/.ssh/che-ws.key
-    IdentitiesOnly yes
-    PubkeyAuthentication yes
-    UserKnownHostsFile /dev/null
-    StrictHostKeyChecking no
 Host *
     PubkeyAuthentication no
     IdentitiesOnly yes
