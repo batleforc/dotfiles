@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Open a terminal; when the focused window is a terminal alone in its column,
+# stack the new one under it instead of opening a new column.
+#
+# niri has no "open in the focused column" window rule, so this waits for the
+# new window and consumes it into the column on its left. The half height comes
+# from the window rule in config.kdl (default-window-height 0.5).
+#
+#   niri-terminal [command ...]     default: ghostty
+set -uo pipefail
+
+APP_ID_RE='^com\.mitchellh\.ghostty$'
+[ $# -gt 0 ] || set -- ghostty
+
+windows() { niri msg -j windows 2>/dev/null; }
+
+# "join" when the focused window is a tiled terminal alone in its column.
+mode=$(windows | APP_ID_RE="$APP_ID_RE" python3 -I -c '
+import json, os, re, sys
+ws = json.load(sys.stdin)
+f = next((w for w in ws if w["is_focused"]), None)
+if (not f or f["is_floating"] or not re.search(os.environ["APP_ID_RE"], f["app_id"] or "")
+        or not f["layout"]["pos_in_scrolling_layout"]):
+    print("new"); sys.exit()
+col = f["layout"]["pos_in_scrolling_layout"][0]
+same = [w for w in ws if w["workspace_id"] == f["workspace_id"] and not w["is_floating"]
+        and (w["layout"]["pos_in_scrolling_layout"] or [None])[0] == col]
+print("join" if len(same) == 1 else "new")
+')
+before=$(windows | python3 -I -c 'import json,sys; print(" ".join(str(w["id"]) for w in json.load(sys.stdin)))')
+
+setsid -f "$@" >/dev/null 2>&1 </dev/null
+[ "$mode" = join ] || exit 0
+
+# Wait up to 5 s for the new terminal, then pull it under the previous one.
+for _ in $(seq 50); do
+    new=$(windows | BEFORE="$before" APP_ID_RE="$APP_ID_RE" python3 -I -c '
+import json, os, re, sys
+old = set(os.environ["BEFORE"].split())
+for w in json.load(sys.stdin):
+    if str(w["id"]) not in old and re.search(os.environ["APP_ID_RE"], w["app_id"] or ""):
+        print(w["id"]); break
+')
+    if [ -n "$new" ]; then
+        niri msg action consume-or-expel-window-left --id "$new"
+        niri msg action focus-window --id "$new"
+        exit 0
+    fi
+    sleep 0.1
+done

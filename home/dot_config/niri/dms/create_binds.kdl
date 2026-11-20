@@ -1,5 +1,5 @@
 binds {
     Mod+space hotkey-overlay-title="Default Launcher: Toggle" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
-    Mod+T hotkey-overlay-title="Open a Terminal: Ghostty" { spawn "ghostty"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: Ghostty" { spawn-sh "~/.local/bin/niri-terminal"; }
 }

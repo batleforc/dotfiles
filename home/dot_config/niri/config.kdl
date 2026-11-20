@@ -24,6 +24,7 @@ layout {
     gaps 16
     center-focused-column "never"
     preset-column-widths {
+        proportion 0.25
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
@@ -51,6 +52,13 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
+}
+
+// Terminals open at half height; ~/.local/bin/niri-terminal (Mod+T) stacks a
+// second one under the first instead of opening a new column.
+window-rule {
+    match app-id=r#"^com\.mitchellh\.ghostty$"#
+    default-window-height { proportion 0.5; }
 }
 
 // Adaptive sync only for games. Outputs set `variable-refresh-rate on-demand=true`
