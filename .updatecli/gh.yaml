@@ -1,0 +1,53 @@
+name: Update gh pin in mise
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "{{ .github.user }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      branch: main
+      commitusingapi: true
+
+actions:
+  bump:
+    kind: github/pullrequest
+    scmid: default
+    spec:
+      title: 'ci: Bump `gh` to {{ source "gh" }}'
+      automerge: false
+      description: |
+        Bump the `gh` version pinned in the mise config.
+        - `gh`: {{ source "gh" }}
+      labels:
+        - "Upgrade"
+        - "UpdateCLI"
+
+sources:
+  gh:
+    kind: githubrelease
+    scmid: default
+    spec:
+      owner: cli
+      repository: cli
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      versionFilter:
+        kind: latest
+    transformers:
+      - trimprefix: "v"
+
+targets:
+  gh-version:
+    name: Update gh in home/dot_config/mise/config.toml.tmpl
+    kind: file
+    sourceid: gh
+    scmid: default
+    spec:
+      file: home/dot_config/mise/config.toml.tmpl
+      matchpattern: '(?m)^gh = "[^"]*"'
+      replacepattern: 'gh = "{{ source "gh" }}"'

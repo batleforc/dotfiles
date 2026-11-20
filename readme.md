@@ -46,6 +46,12 @@ installed). CI runs it in `fedora:44` on every push.
 The same script runs as a `pre-push` hook (`.githooks/`), enabled on each
 machine by a `run_once_` chezmoi script; `git push --no-verify` skips it once.
 
+## Pinned versions
+
+Most mise tools track `latest`. The few pinned ones (`gh`,
+`weebo-skillsagent`) are bumped by updatecli (`updatecli-compose.yaml`,
+`.updatecli/`): a daily workflow opens a PR when upstream releases.
+
 ## Fonts
 
 FiraCode Nerd Font comes from the weebo-os image (`fonts` module in

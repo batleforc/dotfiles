@@ -1,0 +1,53 @@
+name: Update weebo-skillsagent pin in mise
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "{{ .github.user }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      branch: main
+      commitusingapi: true
+
+actions:
+  bump:
+    kind: github/pullrequest
+    scmid: default
+    spec:
+      title: 'ci: Bump `weebo-skillsagent` to {{ source "weebo-skillsagent" }}'
+      automerge: false
+      description: |
+        Bump the `weebo-skillsagent` version pinned in the mise config.
+        - `weebo-skillsagent`: {{ source "weebo-skillsagent" }}
+      labels:
+        - "Upgrade"
+        - "UpdateCLI"
+
+sources:
+  weebo-skillsagent:
+    kind: githubrelease
+    scmid: default
+    spec:
+      owner: batleforc
+      repository: weebo-skillsagent
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      versionFilter:
+        kind: latest
+    transformers:
+      - trimprefix: "v"
+
+targets:
+  weebo-skillsagent-version:
+    name: Update weebo-skillsagent in home/dot_config/mise/config.toml.tmpl
+    kind: file
+    sourceid: weebo-skillsagent
+    scmid: default
+    spec:
+      file: home/dot_config/mise/config.toml.tmpl
+      matchpattern: '"github:batleforc/weebo-skillsagent" = "[^"]*"'
+      replacepattern: '"github:batleforc/weebo-skillsagent" = "{{ source "weebo-skillsagent" }}"'

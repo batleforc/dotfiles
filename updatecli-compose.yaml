@@ -1,0 +1,14 @@
+# Versions pinned in the dotfiles (mise tools that are not "latest").
+# .github/workflows/updatecli.yml runs `updatecli compose apply` daily; each
+# policy opens a PR when upstream releases a new version.
+policies:
+  - name: gh
+    config:
+      - .updatecli/gh.yaml
+    values:
+      - .updatecli/vars.yaml
+  - name: weebo-skillsagent
+    config:
+      - .updatecli/weebo-skillsagent.yaml
+    values:
+      - .updatecli/vars.yaml
