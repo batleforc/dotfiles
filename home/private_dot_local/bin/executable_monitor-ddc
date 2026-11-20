@@ -80,8 +80,18 @@ srgb)
         back=$(cat "$STATE_DIR/preset" 2>/dev/null || echo 0x02)
         ddcutil --bus "$b" setvcp 14 "$back" && notify "Mode natif" "Gamut complet de la dalle (préréglage $back)"
     else
-        echo "$cur" >"$STATE_DIR/preset"
-        ddcutil --bus "$b" setvcp 14 "$SRGB_CODE" && notify "Mode sRGB" "Couleurs limitées au sRGB : niri ne gère pas les couleurs"
+        # Some monitors (MSI MAG 341CQP) accept no sRGB code here: the write is
+        # not verified and the preset reads back as garbage. Check, then undo.
+        ddcutil --bus "$b" --noverify setvcp 14 "$SRGB_CODE" >/dev/null 2>&1
+        sleep 2
+        now=$(getnc "$b" 14)
+        if [ -n "$now" ] && [ "$((now))" -eq "$((SRGB_CODE))" ]; then
+            echo "$cur" >"$STATE_DIR/preset"
+            notify "Mode sRGB" "Couleurs limitées au sRGB : niri ne gère pas les couleurs"
+        else
+            ddcutil --bus "$b" --noverify setvcp 14 "$cur" >/dev/null 2>&1
+            die "sRGB non pilotable en DDC/CI" "L'écran refuse le préréglage $SRGB_CODE : régler sRGB dans son menu (OSD)."
+        fi
     fi ;;
 input)
     b=$(bus) || exit 1
