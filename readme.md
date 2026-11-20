@@ -39,3 +39,7 @@ installed). CI runs it in `fedora:44` on every push.
 
 FiraCode Nerd Font comes from the weebo-os image (`fonts` module in
 `recipes/base/common-modules.yml`), not from these dotfiles.
+
+## Hardware notes
+
+- [Logitech G502 X: report rate and onboard profiles](docs/logitech-g502.md)

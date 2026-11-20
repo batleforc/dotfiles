@@ -1,0 +1,115 @@
+#Dumping profiles from G502 X LIGHTSPEED
+!OnboardProfiles
+buttons: 11
+count: 5
+gbuttons: 11
+name: G502 X LIGHTSPEED
+profiles:
+  1: !OnboardProfile
+    angle_snap: 0
+    blue: 255
+    buttons:
+    - !Button {behavior: 8, type: 1, value: 1}
+    - !Button {behavior: 8, type: 1, value: 2}
+    - !Button {behavior: 8, type: 1, value: 4}
+    - !Button {behavior: 8, type: 1, value: 8}
+    - !Button {behavior: 9, data: 0, value: 7}
+    - !Button {behavior: 8, type: 1, value: 16}
+    - !Button {behavior: 9, data: 0, value: 1}
+    - !Button {behavior: 9, data: 0, value: 2}
+    - !Button {behavior: 9, data: 0, value: 10}
+    - !Button {behavior: 9, data: 0, value: 3}
+    - !Button {behavior: 9, data: 0, value: 4}
+    enabled: 1
+    gbuttons:
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    green: 255
+    lighting:
+    - !LEDEffectSetting {ID: 15, intensity: 100, period: 0}
+    - !LEDEffectSetting {ID: 15, intensity: 100, period: 0}
+    - !LEDEffectSetting {ID: 16, intensity: 100, period: 0}
+    - !LEDEffectSetting {ID: 16, intensity: 100, period: 0}
+    name: ''
+    po_timeout: 300
+    power_mode: 255
+    ps_timeout: 60
+    red: 255
+    report_rate: 1
+    reserved: !!binary |
+      //////////8=
+    resolution_default_index: 2
+    resolution_shift_index: 0
+    resolutions:
+    - 800
+    - 1200
+    - 1600
+    - 2400
+    - 3200
+    sector: 257
+    write_count: 65535
+  2: !OnboardProfile
+    angle_snap: 0
+    blue: 255
+    buttons:
+    - !Button {behavior: 8, type: 1, value: 1}
+    - !Button {behavior: 8, type: 1, value: 2}
+    - !Button {behavior: 8, type: 1, value: 4}
+    - !Button {behavior: 8, type: 1, value: 8}
+    - !Button {behavior: 9, data: 0, value: 11}
+    - !Button {behavior: 8, type: 1, value: 16}
+    - !Button {behavior: 9, data: 0, value: 1}
+    - !Button {behavior: 9, data: 0, value: 2}
+    - !Button {behavior: 9, data: 0, value: 10}
+    - !Button {behavior: 9, data: 0, value: 3}
+    - !Button {behavior: 9, data: 0, value: 4}
+    enabled: 1
+    gbuttons:
+    - !Button {behavior: 8, type: 1, value: 1}
+    - !Button {behavior: 8, type: 1, value: 2}
+    - !Button {behavior: 8, modifiers: 1, type: 2, value: 23}
+    - !Button {behavior: 8, type: 1, value: 8}
+    - !Button {behavior: 15, bytes: !!binary "/////w==\n"}
+    - !Button {behavior: 8, type: 1, value: 16}
+    - !Button {behavior: 8, modifiers: 3, type: 2, value: 43}
+    - !Button {behavior: 8, modifiers: 1, type: 2, value: 43}
+    - !Button {behavior: 8, modifiers: 1, type: 2, value: 39}
+    - !Button {behavior: 8, modifiers: 1, type: 2, value: 29}
+    - !Button {behavior: 8, modifiers: 1, type: 2, value: 27}
+    green: 255
+    lighting:
+    - !LEDEffectSetting {ID: 15, intensity: 100, period: 0}
+    - !LEDEffectSetting {ID: 15, intensity: 100, period: 0}
+    - !LEDEffectSetting {ID: 16, intensity: 100, period: 0}
+    - !LEDEffectSetting {ID: 16, intensity: 100, period: 0}
+    name: ''
+    po_timeout: 300
+    power_mode: 255
+    ps_timeout: 60
+    red: 255
+    report_rate: 2
+    reserved: !!binary |
+      //////////8=
+    resolution_default_index: 2
+    resolution_shift_index: 0
+    resolutions:
+    - 800
+    - 1200
+    - 1600
+    - 2400
+    - 3200
+    sector: 258
+    write_count: 65535
+sectors: 16
+size: 255
+version: 3
+
