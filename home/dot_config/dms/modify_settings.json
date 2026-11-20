@@ -32,5 +32,33 @@ except json.JSONDecodeError:
     sys.exit(0)
 
 settings.update(PINNED)
+
+# Bar: auto-hide on the QD-OLED only (a static bar burns in), fixed elsewhere.
+# DMS has no "every screen but X", so each bar lists its screens by model
+# (displayNameMode "model"; laptop panel = BOE "0x0BC9"). A screen in neither
+# list gets no bar: add its model to FIXED_BAR_SCREENS.
+# The OLED bar is rebuilt from the main bar on every apply, so widgets stay in
+# sync: edit the main bar in the DMS UI, not the OLED one.
+FIXED_BAR_SCREENS = ["0x0BC9", "27G2G8"]
+OLED_SCREENS = ["MAG 341C OLED"]
+OLED_BAR_ID = "oled"
+
+bars = settings.get("barConfigs")
+if isinstance(bars, list) and bars:
+    main = next((b for b in bars if b.get("id") == "default"), None)
+    if main is None:
+        main = next((b for b in bars if b.get("id") != OLED_BAR_ID), None)
+if isinstance(bars, list) and bars and main is not None:
+    main["screenPreferences"] = FIXED_BAR_SCREENS
+    oled = json.loads(json.dumps(main))
+    oled.update({
+        "id": OLED_BAR_ID,
+        "name": "OLED Bar",
+        "screenPreferences": OLED_SCREENS,
+        "autoHide": True,
+    })
+    others = [b for b in bars if b.get("id") != OLED_BAR_ID]
+    settings["barConfigs"] = others + [oled]
+
 json.dump(settings, sys.stdout, indent=2, ensure_ascii=False)
 sys.stdout.write("\n")
