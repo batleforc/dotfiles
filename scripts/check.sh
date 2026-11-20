@@ -46,17 +46,39 @@ fi
 
 echo "== shell scripts"
 if have shellcheck; then
-    scripts=("$dest/.local/bin/monitor-ddc")
+    scripts=("$dest/.local/bin/monitor-ddc" "$repo"/default/*.sh)
     # run_ scripts are templates: render them to check the real script.
     while IFS= read -r t; do
         out="$work/$(basename "$t" .tmpl)"
         chezmoi execute-template --source "$repo" --config "$work/chezmoi.toml" <"$t" >"$out" && scripts+=("$out")
     done < <(find "$repo/home" -name 'run_*.sh.tmpl')
     for s in "${scripts[@]}"; do
-        if shellcheck -S warning "$s"; then ok "$(basename "$s")"; else ko "shellcheck $(basename "$s")"; fi
+        # SC1091: system files sourced by the snippets do not exist in CI.
+        if shellcheck -e SC1091 "$s"; then ok "$(basename "$s")"; else ko "shellcheck $(basename "$s")"; fi
     done
 else
     skip "shellcheck" shellcheck
+fi
+
+echo "== bashrc"
+# Every file the rendered .bashrc sources by absolute path must exist: it once
+# pointed at an old clone, and a new shell silently lost aliases, mise, starship.
+# A ~/ path is looked up in the rendered home, where only managed files exist.
+while IFS= read -r f; do
+    path="${f/#\~/$dest}"
+    if [ -f "$path" ]; then ok "sources $f"; else ko ".bashrc sources a missing file: $f"; fi
+done < <(sed -nE 's/^\s*(source|\.) "?(~?\/[^" ]+)"?.*/\2/p' "$dest/.bashrc")
+
+echo "== secrets"
+if have gitleaks; then
+    # Whole history: a token removed in a later commit is still published.
+    if gitleaks git "$repo" --no-banner --redact -l warn >"$work/gitleaks.log" 2>&1; then
+        ok "gitleaks: no secret in the history"
+    else
+        ko "gitleaks found something"; cat "$work/gitleaks.log"
+    fi
+else
+    skip "gitleaks" gitleaks
 fi
 
 echo "== json"

@@ -12,9 +12,16 @@ jobs:
     container: fedora:44
     steps:
       - name: Install tools
-        run: dnf install -y --setopt=install_weak_deps=False git chezmoi niri ShellCheck jq python3 libxml2
+        run: dnf install -y --setopt=install_weak_deps=False git chezmoi niri ShellCheck gitleaks jq python3 libxml2
 
       - uses: actions/checkout@v4
+        with:
+          # gitleaks scans the whole history: a secret removed later is still published.
+          fetch-depth: 0
+
+      - name: Trust the checkout
+        # The container runs as root on a runner-owned checkout; git refuses it otherwise.
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: Render and validate
         env:

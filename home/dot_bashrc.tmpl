@@ -22,7 +22,8 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-source ~/.local/share/chezmoi/default/main.sh
+# Shell snippets live in the dotfiles repo itself (default/), next to home/.
+source {{ joinPath .chezmoi.workingTree "default/main.sh" | quote }}
 eval "$(~/.local/bin/mise activate bash)"
 
 # Added by LM Studio CLI (lms)

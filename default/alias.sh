@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 if command -v eza &> /dev/null; then
     alias ls='eza -lh --group-directories-first --icons=auto'
     alias ll='ls -lah'

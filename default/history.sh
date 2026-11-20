@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # History control
 shopt -s histappend
 HISTCONTROL=ignoreboth
