@@ -22,6 +22,15 @@ Some apps rewrite their own config, so the repo does not always own the whole fi
 - `~/.config/DankMaterialShell` is a compatibility symlink to `~/.config/dms`
   and is ignored on purpose.
 
+## VS Code extensions
+
+`dot_config/Code/User/extensions.json` lists the extensions chezmoi installs (the
+`run_onchange_` script re-runs when the list changes). Extensions that another
+one pulls in (the Markdown pack, Remote-SSH helpers) are left out on purpose.
+
+Two are not on the Marketplace and must be installed by hand from their VSIX:
+`batlehub.batlehub-theme` (the BatleHub colour theme) and `batlehub.che-remote-ssh`.
+
 ## Theme
 
 BatleHub everywhere: VS Code (extension), DMS (`dms/themes/batlehub`), niri
