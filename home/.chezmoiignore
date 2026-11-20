@@ -1,6 +1,12 @@
 {{ if lookPath "noctalia" -}}
-{{/* DMS regenerates these at runtime; they are dead weight on a Noctalia host. */}}
+{{/* DMS-only files: dead weight on a Noctalia host, which has no `dms`. */}}
 .config/niri/dms
+.config/dms
+restore-dms-plugins.sh
+.config/niri/shell-dms.kdl
+{{ else -}}
+{{/* And the reverse: a DMS host never loads the Noctalia fragment. */}}
+.config/niri/shell-noctalia.kdl
 {{ end -}}
 
 {{/* DMS moved its config to ~/.config/dms and left this as a compatibility

@@ -82,17 +82,8 @@ binds {
     Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
 
-    // --- Media, volume, brightness (through DMS, so its OSD shows) ------------
-    XF86AudioRaiseVolume  allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "increment" "5"; }
-    XF86AudioLowerVolume  allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "decrement" "5"; }
-    XF86AudioMute         allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "mute"; }
-    XF86AudioMicMute      allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "micmute"; }
-    XF86AudioPlay         allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "playPause"; }
-    XF86AudioStop         allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "stop"; }
-    XF86AudioPrev         allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "previous"; }
-    XF86AudioNext         allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "next"; }
-    XF86MonBrightnessUp   allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "increment" "5" ""; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "decrement" "5" ""; }
+    // Volume, media and brightness keys belong to the desktop shell, so they
+    // live in shell-dms.kdl / shell-noctalia.kdl (each shell shows its own OSD).
 
     // External monitor (MSI MAG 341CQP QD-OLED) over DDC/CI, see ~/.local/bin/monitor-ddc.
     // Not Mod+Alt+S: Super+Alt+S is the screen reader.

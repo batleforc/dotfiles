@@ -44,6 +44,41 @@ else
     skip "niri validate" niri
 fi
 
+echo "== noctalia host"
+# The second laptop runs Noctalia instead of DMS. The templates switch on
+# `lookPath "noctalia"`, so a fake binary on PATH renders that profile.
+mkdir -p "$work/fakebin" "$work/noctalia-home"
+printf '#!/bin/sh\nexit 0\n' >"$work/fakebin/noctalia" && chmod +x "$work/fakebin/noctalia"
+if PATH="$work/fakebin:$PATH" chezmoi apply --source "$repo" --destination "$work/noctalia-home" \
+    --config "$work/chezmoi.toml" --persistent-state "$work/state-noctalia.boltdb" \
+    --exclude scripts,externals --no-tty --force >"$work/render-noctalia.log" 2>&1; then
+    ok "chezmoi renders the Noctalia profile"
+    if grep -q 'include "shell-noctalia.kdl"' "$work/noctalia-home/.config/niri/shell.kdl"; then
+        ok "shell.kdl picks shell-noctalia.kdl"
+    else
+        ko "shell.kdl does not pick shell-noctalia.kdl"
+    fi
+    if [ -e "$work/noctalia-home/.config/dms" ] || [ -e "$work/noctalia-home/.config/niri/dms" ]; then
+        ko "DMS files deployed on a Noctalia host"
+    else
+        ok "no DMS file on a Noctalia host"
+    fi
+    if have niri; then
+        if niri validate -c "$work/noctalia-home/.config/niri/config.kdl" >"$work/niri-noctalia.log" 2>&1; then
+            ok "niri config (Noctalia profile)"
+        else
+            ko "niri validate (Noctalia profile)"; cat "$work/niri-noctalia.log"
+        fi
+    fi
+    if grep -rqE '"dms"|dms ipc' "$work/noctalia-home/.config/niri/"; then
+        ko "niri binds call dms on a Noctalia host"
+    else
+        ok "no niri bind calls dms on a Noctalia host"
+    fi
+else
+    ko "chezmoi render (Noctalia profile)"; cat "$work/render-noctalia.log"
+fi
+
 echo "== shell scripts"
 if have shellcheck; then
     scripts=("$dest/.local/bin/monitor-ddc" "$repo"/default/*.sh)
