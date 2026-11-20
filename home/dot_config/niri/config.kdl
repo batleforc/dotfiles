@@ -39,6 +39,15 @@ layout {
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
+// Ask every app to drop its own titlebar (client-side decorations).
+// niri draws no titlebar of its own, so apps that comply lose their close and
+// maximize buttons: Mod+Q closes, Mod+F maximizes. GTK apps comply; apps that
+// ignore the request (Electron/Chrome, VS Code...) keep theirs. Ghostty drops
+// its titlebar either way (window-decoration = none in its config).
+// Uncomment to enable; niri reloads on save, but already-open windows keep
+// their titlebar until they are reopened.
+// prefer-no-csd
+
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
