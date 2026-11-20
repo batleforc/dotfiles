@@ -2,3 +2,7 @@ font-family = "FiraCode Nerd Font"
 
 # themes/batlehub: true-black ground, which leaves QD-OLED pixels off.
 theme = batlehub
+
+# No titlebar: niri tiles the window and Mod+Q closes it. The tab bar still
+# shows up on its own when a window holds more than one tab.
+window-decoration = none
