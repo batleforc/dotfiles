@@ -43,6 +43,8 @@ ground is true black for OLED panels.
 `scripts/check.sh` renders the repo into a throwaway home and validates it
 (niri, shellcheck, JSON/JSONC, fontconfig, the `modify_` scripts, Ghostty when
 installed). CI runs it in `fedora:44` on every push.
+The same script runs as a `pre-push` hook (`.githooks/`), enabled on each
+machine by a `run_once_` chezmoi script; `git push --no-verify` skips it once.
 
 ## Fonts
 

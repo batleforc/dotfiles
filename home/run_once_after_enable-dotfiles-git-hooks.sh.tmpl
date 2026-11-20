@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Point this machine's clone of the dotfiles at the hooks tracked in .githooks/
+# (pre-push runs scripts/check.sh). Per clone, so it runs once on each machine.
+set -euo pipefail
+git -C {{ .chezmoi.workingTree | quote }} config core.hooksPath .githooks

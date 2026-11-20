@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Validate the dotfiles before they reach GitHub and the other machines.
+# Same checks as CI (scripts/check.sh), minus the tools this machine lacks.
+# Skip once with: git push --no-verify
+repo="$(git rev-parse --show-toplevel)"
+if ! "$repo/scripts/check.sh" >"${TMPDIR:-/tmp}/dotfiles-pre-push.log" 2>&1; then
+    grep -E 'FAIL' "${TMPDIR:-/tmp}/dotfiles-pre-push.log" | sed 's/\x1b\[[0-9;]*m//g' >&2
+    echo "pre-push: scripts/check.sh failed, push aborted (full log: ${TMPDIR:-/tmp}/dotfiles-pre-push.log)" >&2
+    exit 1
+fi
